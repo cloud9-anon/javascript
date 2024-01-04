@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script> 
+    var bookarr = [
+  {
+    name: "Rahul",
+    author: "franz",
+    publish: "04-04-2001",
+    price: 333,
+    language: ["hindi", "English"],
+  },
+];
+
+const addbook = () => {
+  var price = parseInt(document.getElementById("price").value);
+  var name = document.getElementById("name").value;
+  var author = document.getElementById("author").value;
+  var publish = document.getElementById("date").value;
+  var language = document.getElementById("language").values();
+
+  var book = { name, author, publish, price, language };
+  bookarr.push(book);
+  clearform();
+  displayTable();
+};
+
+const displayTable = () => {
+  var str =
+    "<table border='2'><tr><th>Book Name</th><th>Author</th><th>Publish Date</th><th>Price</th><th>Language</th></tr>";
+  for (var b of bookarr) {
+    str += `<tr><td>${b.name}</td><td>${b.author}</td><td>${b.publish}</td><td>${b.price}</td><td>${b.language}</td></tr>`;
+  }
+  str += "</table>";
+  document.getElementById("mydiv").innerHTML = str;
+};
+
+const clearform = function () {
+  document.getElementById("name").value = "";
+  document.getElementById("author").value = "";
+  document.getElementById("publish").value = "";
+  document.getElementById("price").value = "";
+  document.getElementById("language").value = "";
+  document.getElementById("name").focus();
+};
+
+function valaidatename() {
+  var nm = document.getElementById("name").value;
+  if (nm.trim().length < 3) {
+    document.getElementById("errnm").innerHTML = "name acannot be 3 letters";
+    return false;
+  }
+
+  document.getElementById("errnm").innerHTML = "";
+  return true;
+}
+
+function validateprice() {
+  var pr = parseInt(document.getElementById("price").value);
+  if (pr < 200) {
+    document.getElementById("errpr").innerHTML =
+      "Price should not be less than Rs.200";
+  }
+}
+
+function validatelanguage() {
+  var cnt = 0;
+  var arr = document.getElementsByName("language");
+  for (var lang of arr) {
+    if (lang.checked) {
+      cnt++;
+      if (cnt >= 2) {
+        document.getElementById("errlanguag").innerHTML = "";
+        return true;
+      }
+    }
+
+    document.getElementById("errlanguage").innerHTML =
+      "minimum 2 languages should be selected";
+    return false;
+  }
+}
+
+    
+    </script>
+
+
+</head>
+<body onload="displayTable()">
+    <table>
+        <form method="post" onsubmit="return validatedata()">
+            <tr>
+                <td><label for="nm"> Book Name</label></td>
+                <td><input type="text" name="name" id="nm"   required autofocus minlength="3"/></td>
+                <td id="errnm"></td>
+            </tr>
+            <tr>
+                <td><label for="author"> Book Author</label></td>
+                <td><input type="text" name="author" id="author" /></td>
+                
+            </tr>
+    
+            <tr>
+                <td><label for="tdate">Date of Publish </label></td>
+                <td><input type="date" name="date" id="date" ></td>
+            </tr>
+            <tr>
+                <td><label for="price">Price</label></td>
+                <td><input type="number" name="price" id="price" min="200" required /></td>
+                <td id="errpr"></td>
+            </tr>
+           
+            
+          
+            <tr>
+                <td><label for="language">Language</label></td>
+                <td>
+                <input type="checkbox" name="language" id="English" value="English"/><label for="English">English</label><br>
+                <input type="checkbox" name="language" id="Hindi" value="Hindi"/><label for="Hindi">Hindi</label>
+                <input type="checkbox" name="language" id="Marathi" value="Marathi"/><label for="Marathi">Marathi</label><br>
+                </td>
+                <td id="errlanguage"></td>
+            </tr>
+        
+            <tr>
+                <td></td>
+                <td><Button type="submit" name="btn" id="add" value="add" onclick="addbook()">Add Book</Button>
+                <Button type="reset" name="btn" id="cancel" value="cancel">Clear Form</Button></td>
+            </tr>
+    
+            <div id="mydiv"></div>
+        </form>
+    </table>
+
+</body>
+</html>
